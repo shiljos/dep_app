@@ -1,0 +1,5 @@
+task :uptime do
+	on roles(:all) do
+		execute "uptime"
+	end
+end
