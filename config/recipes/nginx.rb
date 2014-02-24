@@ -15,11 +15,10 @@ namespace :nginx do
    	  template "nginx_unicorn.erb", "/tmp/nginx_conf"
       execute :sudo, "mv", "/tmp/nginx_conf", "/etc/nginx/sites-enabled/#{fetch(:application)}" 	
       execute :sudo, "rm", "-f", "/etc/nginx/sites-enabled/default"
-      restart
+      
     end
   end
   after "deploy:finishing", "nginx:setup"
-
 
     %w[start stop restart].each do |command|
       desc "#{command} nginx"
@@ -29,4 +28,6 @@ namespace :nginx do
         end
       end
     end
+      after "nginx:setup", "nginx:restart"
+
 end

@@ -1,7 +1,7 @@
 set_default(:postgresql_host, "localhost")
-set_default(:postgresql_user, "dep_app" )
+set_default(:postgresql_user, "dep_app4" )
 set_default(:postgresql_password, "secret")
-set_default(:postgresql_database, "dep_app_production")
+set_default(:postgresql_database, "dep_app4_production")
 
 namespace :postgresql do
   desc "Install the latest stable release do PostgreSQL"
@@ -27,8 +27,8 @@ namespace :postgresql do
   	desc "Generate the database.yml configuration file."
       task :setup do
         on roles(:app) do
-          execute :mkdir, "-p", "#{shared_path}/config"
-          template "postgresql.yml.erb", "#{shared_path}/config/database.yml"
+          execute :mkdir, "-p", "/home/deployer/apps/dep_app/shared/config"
+          template "postgresql.yml.erb", "/home/deployer/apps/dep_app/shared/config/database.yml"
         end
     end
     after "deploy:starting", "postgresql:setup"

@@ -1,14 +1,14 @@
-set_default(:unicorn_user, fetch(:user) )
-set_default(:unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid" )
-set_default(:unicorn_config, "#{shared_path}/config/unicorn.rb" )
-set_default(:unicorn_log, "#{shared_path}/log/unicorn.log" )
+set_default(:unicorn_user, "deployer" )
+set_default(:unicorn_pid, "/home/deployer/apps/dep_app/current/tmp/pids/unicorn.pid" )
+set_default(:unicorn_config, "/home/deployer/apps/dep_app/shared/config/unicorn.rb" )
+set_default(:unicorn_log, "/home/deployer/apps/dep_app/shared/log/unicorn.log" )
 set_default(:unicorn_workers, 2)
 
 namespace :unicorn do
   desc "Setup Unicorn initializer and app configuration"
   task :setup do
     on roles(:app) do
-      execute :mkdir, "-p", "#{shared_path}/config"
+      execute :mkdir, "-p", "/home/deployer/apps/dep_app/shared/config"
       template "unicorn.rb.erb", fetch(:unicorn_config)
       template "unicorn_init.erb", "/tmp/unicorn_init"
       execute :chmod, "+x", "/tmp/unicorn_init"
